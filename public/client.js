@@ -44,28 +44,66 @@ window.addEventListener('load', function() {
 		}
 	  
 	});//END_SOCKET.ON
+
+	socket.on('MATCH_CREATED', function(id,name,isHome) {
+				      		
+		var currentUserAtr = id+':'+name+':'+isHome;
+		
+		 if(window.unityInstance!=null)
+		  {
+		   
+			window.unityInstance.SendMessage ('NetworkManager', 'OnMatchCreated', currentUserAtr);
+		  
+		  }
+		
+	});//END_SOCKET.ON
 	
 		
 	socket.on('SPAWN_PLAYER', function(id,name,avatar,position) {
 	
-	    var currentUserAtr = id+':'+name+':'+avatar+':'+position;
+	    // var currentUserAtr = id+':'+name+':'+avatar+':'+position;
+		
+		// if(window.unityInstance!=null)
+		// {
+	    //  // sends the package currentUserAtr to the method OnSpawnPlayer in the NetworkManager class on Unity
+		//   window.unityInstance.SendMessage ('NetworkManager', 'OnSpawnPlayer', currentUserAtr);
+		
+		// }
+		
+	});//END_SOCKET.ON
+
+	socket.on('OPPONENT_SHOOT', function(shootPower,ballDirection,type) {
+	
+	    var currentUserAtr = shootPower+':'+ballDirection+':'+type;
 		
 		if(window.unityInstance!=null)
 		{
-	     // sends the package currentUserAtr to the method OnSpawnPlayer in the NetworkManager class on Unity
-		  window.unityInstance.SendMessage ('NetworkManager', 'OnSpawnPlayer', currentUserAtr);
+	     // sends the package currentUserAtr to the method OnOpponentShoot in the NetworkManager class on Unity
+		  window.unityInstance.SendMessage ('NetworkManager', 'OnOpponentShoot', currentUserAtr);
+		
+		}
+		
+	});//END_SOCKET.ON
+	socket.on('OPPONENT_MOVE_BALL', function(ballDirection) {
+	
+	    var currentUserAtr = ballDirection;
+		
+		if(window.unityInstance!=null)
+		{
+	     // sends the package currentUserAtr to the method OnOpponentShoot in the NetworkManager class on Unity
+		  window.unityInstance.SendMessage ('NetworkManager', 'OnOpponentMoveBall', currentUserAtr);
 		
 		}
 		
 	});//END_SOCKET.ON
 	
 	socket.on('RESPAWN_PLAYER', function(id,name,avatar,position) {
-	    var currentUserAtr = id+':'+name+':'+avatar+':'+position;
+	//     var currentUserAtr = id+':'+name+':'+avatar+':'+position;
 		
-	 if(window.unityInstance!=null)
-		{
-		   window.unityInstance.SendMessage ('NetworkManager', 'OnRespawPlayer', currentUserAtr);
-		}
+	//  if(window.unityInstance!=null)
+	// 	{
+	// 	   window.unityInstance.SendMessage ('NetworkManager', 'OnRespawPlayer', currentUserAtr);
+	// 	}
 		
 	});//END_SOCKET.ON
 	
