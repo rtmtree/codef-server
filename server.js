@@ -114,9 +114,6 @@ io.on('connection', function (socket) {
 
 		/*********************************************************************************************/
 
-		//send to the client.js script
-		socket.emit("LOGIN_SUCCESS", currentUser.socketId, currentUser.name, currentUser.avatar, currentUser.position);
-
 		//spawn all connected clients for currentUser client 
 		console.log(clients)
 		Object.keys(clientLookup).forEach(function (i) {
