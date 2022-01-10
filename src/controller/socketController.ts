@@ -1,4 +1,5 @@
 import { Socket } from "socket.io";
+import { logInfo } from "../middleware/logger";
 import { clientLookup, clients } from "../socket/store";
 import { User } from "../socket/type";
 
@@ -13,13 +14,13 @@ export const onSocketEvent = (socket: Socket) => {
   socket.on("PING", function (_pack) {
     const pack = JSON.parse(_pack);
 
-    console.log("message from user# " + socket.id + ": " + pack.msg);
+    logInfo("message from user# " + socket.id + ": " + pack.msg);
 
     socket.emit("PONG", socket.id, pack.msg);
   });
 
   socket.on("LOGIN", function (_data) {
-    console.log("[INFO] JOIN received !!! ");
+    logInfo("[INFO] JOIN received !!! ");
 
     const data = JSON.parse(_data);
     user = {
@@ -29,13 +30,13 @@ export const onSocketEvent = (socket: Socket) => {
       socketId: socket.id,
     };
 
-    console.log("[INFO] player " + user.name + ": logged!");
+    logInfo("[INFO] player " + user.name + ": logged!");
 
     clients.push(user);
 
     clientLookup[user.socketId] = user;
 
-    console.log("[INFO] Total players: " + clients.length);
+    logInfo("[INFO] Total players: " + clients.length);
 
     /*********************************************************************************************/
 
@@ -46,25 +47,24 @@ export const onSocketEvent = (socket: Socket) => {
       user.avatar,
       user.position
     );
-    console.log(`LOGINSUCCESS:${JSON.stringify(user)}`);
+    logInfo(`LOGINSUCCESS:${JSON.stringify(user)}`);
   });
 
   socket.on("FIND_MATCH", function (_data) {
-    console.log("[INFO] JOIN received !!! ");
+    logInfo("[INFO] JOIN received !!! ");
 
     const data = JSON.parse(_data);
 
-    console.log("[INFO] player " + data.name + ": find match!");
+    logInfo("[INFO] player " + data.name + ": find match!");
 
     clientLookup[socket.id].status = 1;
 
     /*********************************************************************************************/
 
-    console.log(clients);
     Object.keys(clientLookup).forEach(function (i) {
       if (clientLookup[i].socketId != user.socketId) {
         if (clientLookup[i].status == 1) {
-          console.log(user.socketId, "MATCH_CREATED", clientLookup[i].socketId);
+          logInfo(user.socketId + " MATCH_CREATED " + clientLookup[i].socketId);
           socket.emit("MATCH_CREATED", user.name, clientLookup[i].name, true);
           socket
             .to(clientLookup[i].socketId)
@@ -78,7 +78,7 @@ export const onSocketEvent = (socket: Socket) => {
 
   socket.on("MOVE_AND_ROTATE", function (_data) {
     const data = JSON.parse(_data);
-    console.log(`{JSON.stringify( user)}`);
+
     if (user) {
       user.position = data.position;
 
@@ -95,8 +95,7 @@ export const onSocketEvent = (socket: Socket) => {
 
   socket.on("SHOOT", function (_data) {
     const data = JSON.parse(_data);
-    console.log("SHOOT");
-    console.log(data);
+    logInfo("SHOOT");
     if (user) {
       socket
         .to(user.curOpponent)
@@ -106,8 +105,7 @@ export const onSocketEvent = (socket: Socket) => {
 
   socket.on("MOVE_BALL", function (_data) {
     const data = JSON.parse(_data);
-    console.log("MOVE_BALL");
-    console.log(data);
+    logInfo("MOVE_BALL");
     if (user) {
       socket
         .to(user.curOpponent)
@@ -141,7 +139,7 @@ export const onSocketEvent = (socket: Socket) => {
           clients[i].name == user.name &&
           clients[i].socketId == user.socketId
         ) {
-          console.log("User " + clients[i].name + " has disconnected");
+          logInfo("User " + clients[i].name + " has disconnected");
           clients.splice(i, 1);
         }
       }

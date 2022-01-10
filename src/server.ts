@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import api from "./api/v1";
-import { corsOptions } from "./config/cors";
+import { corsOptions } from "./middleware/cors";
 
 const server = express();
 

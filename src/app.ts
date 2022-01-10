@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import { onSocketEvent } from "./controller/socketController";
 import server from "./server";
 import http from "http";
+import { logInfo } from "./middleware/logger";
 
 const port = process.env.PORT || 3000;
 const httpServer = http.createServer(server);
@@ -11,7 +12,7 @@ const start = () => {
   try {
     io.on("connection", onSocketEvent);
     httpServer.listen(port, () => {
-      console.log(`Starting server on ${port}...`);
+      logInfo(`Starting server on ${port}...`);
     });
   } catch (err) {
     console.error(err);
