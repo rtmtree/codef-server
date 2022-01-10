@@ -1,8 +1,8 @@
-import { Router } from "express";
-import health from "./health";
+import { Router } from 'express'
+import health from './health'
 
-const router = Router();
+const router = Router()
 
-router.use("/health", health);
+router.use('/health', health)
 
-export default router;
+export default router

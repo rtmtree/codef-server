@@ -1,19 +1,19 @@
-import { Socket } from "socket.io";
+import { Socket } from 'socket.io'
 
 export type SocketEventParams = {
-  socket: Socket;
+  socket: Socket
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: any;
-};
+  data?: any
+}
 
 export type User = {
-  name: string | undefined;
-  status: number;
-  socketId: string | undefined;
-  curOpponent?: string;
-  avatar?: string;
-  isDead?: boolean;
-  position?: object;
-  rotation?: object;
-  timeOut?: number;
-};
+  name: string | undefined
+  status: number
+  socketId: string | undefined
+  curOpponent?: string
+  avatar?: string
+  isDead?: boolean
+  position?: object
+  rotation?: object
+  timeOut?: number
+}

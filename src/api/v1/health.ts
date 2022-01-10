@@ -1,14 +1,14 @@
-import { Request, Response, Router } from "express";
-import { clients } from "../../socket/store";
+import { Request, Response, Router } from 'express'
+import { clients } from '../../socket/store'
 
-const router = Router();
+const router = Router()
 
-router.get("/", (_: Request, res: Response) => {
+router.get('/', (_: Request, res: Response) => {
   res.json({
-    status: "ok",
+    status: 'ok',
     clients: clients,
     totalClients: clients.length,
-  });
-});
+  })
+})
 
-export default router;
+export default router
