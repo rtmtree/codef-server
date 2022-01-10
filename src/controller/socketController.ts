@@ -4,14 +4,14 @@ import { User } from "../socket/type";
 
 export const onSocketEvent = (socket: Socket) => {
   // user unique on each socket
-  var user: User = {
+  let user: User = {
     name: undefined,
     socketId: undefined,
     status: 0,
   };
 
   socket.on("PING", function (_pack) {
-    var pack = JSON.parse(_pack);
+    const pack = JSON.parse(_pack);
 
     console.log("message from user# " + socket.id + ": " + pack.msg);
 
@@ -21,7 +21,7 @@ export const onSocketEvent = (socket: Socket) => {
   socket.on("LOGIN", function (_data) {
     console.log("[INFO] JOIN received !!! ");
 
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
     user = {
       name: data.name,
       status: 0,
@@ -52,7 +52,7 @@ export const onSocketEvent = (socket: Socket) => {
   socket.on("FIND_MATCH", function (_data) {
     console.log("[INFO] JOIN received !!! ");
 
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
 
     console.log("[INFO] player " + data.name + ": find match!");
 
@@ -77,7 +77,7 @@ export const onSocketEvent = (socket: Socket) => {
   });
 
   socket.on("MOVE_AND_ROTATE", function (_data) {
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
     console.log(`{JSON.stringify( user)}`);
     if (user) {
       user.position = data.position;
@@ -94,7 +94,7 @@ export const onSocketEvent = (socket: Socket) => {
   });
 
   socket.on("SHOOT", function (_data) {
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
     console.log("SHOOT");
     console.log(data);
     if (user) {
@@ -105,7 +105,7 @@ export const onSocketEvent = (socket: Socket) => {
   });
 
   socket.on("MOVE_BALL", function (_data) {
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
     console.log("MOVE_BALL");
     console.log(data);
     if (user) {
@@ -116,7 +116,7 @@ export const onSocketEvent = (socket: Socket) => {
   });
 
   socket.on("ANIMATION", function (_data) {
-    var data = JSON.parse(_data);
+    const data = JSON.parse(_data);
 
     if (user) {
       user.timeOut = 0;
@@ -136,7 +136,7 @@ export const onSocketEvent = (socket: Socket) => {
       socket.broadcast.emit("USER_DISCONNECTED", user.socketId);
       delete clientLookup[user.socketId];
 
-      for (var i = 0; i < clients.length; i++) {
+      for (let i = 0; i < clients.length; i++) {
         if (
           clients[i].name == user.name &&
           clients[i].socketId == user.socketId

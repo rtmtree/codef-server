@@ -10,7 +10,6 @@ const io = new Server(httpServer);
 const start = () => {
   try {
     io.on("connection", onSocketEvent);
-
     httpServer.listen(port, () => {
       console.log(`Starting server on ${port}...`);
     });

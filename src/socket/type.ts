@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 
 export type SocketEventParams = {
   socket: Socket;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any;
 };
 
