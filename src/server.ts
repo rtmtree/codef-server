@@ -5,8 +5,8 @@ import api from './api/v1'
 import { corsOptions } from './middleware/cors'
 
 const server = express()
-const pathToTemplateData = path.join(__dirname, '../public/TemplateData')
-const pathToBuild = path.join(__dirname, '../public/Build')
+const pathToTemplateData = path.join(__dirname, '../../public/TemplateData')
+const pathToBuild = path.join(__dirname, '../../public/Build')
 
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
