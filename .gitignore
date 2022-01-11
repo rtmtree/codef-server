@@ -1,4 +1,10 @@
 dist/*
 !dist/public/
 node_module*/
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
 .vscode/
