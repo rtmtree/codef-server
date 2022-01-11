@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "16.13.0"
+  },
   "scripts": {
     "clean": "rm -rf node_modules",
     "format": "prettier --write .",
+    "postinstall": "tsc",
     "lint": "prettier --check . && eslint .",
     "prepare": "husky install",
-    "start": "tsc && node ./dist/app.js",
+    "start": "node ./dist/app.js",
     "test": "jest"
   },
   "keywords": [],
