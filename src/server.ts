@@ -7,13 +7,13 @@ import { corsOptions } from './middleware/cors'
 const server = express()
 const pathToTemplateData = path.join(__dirname, '../../public/TemplateData')
 const pathToBuild = path.join(__dirname, '../../public/Build')
-console.log(pathToTemplateData)
+
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 server.use(cors(corsOptions))
 
-server.use('../../public/TemplateData', express.static(pathToTemplateData))
-server.use('../../public/Build', express.static(pathToBuild))
+server.use('/public/TemplateData', express.static(pathToTemplateData))
+server.use('/public/Build', express.static(pathToBuild))
 server.use(express.static(__dirname + '/public'))
 
 server.use('/api', api)
