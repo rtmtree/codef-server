@@ -9,10 +9,9 @@
   "scripts": {
     "clean": "rm -rf node_modules",
     "format": "prettier --write .",
-    "postinstall": "tsc",
     "lint": "prettier --check . && eslint .",
     "prepare": "husky install",
-    "start": "node ./dist/app.js",
+    "start": "tsc && node ./dist/src/app.js",
     "test": "jest"
   },
   "keywords": [],
