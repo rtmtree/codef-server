@@ -72,21 +72,20 @@ window.addEventListener('load', function() {
 		
 	});//END_SOCKET.ON
 
-	socket.on('OPPONENT_SHOOT', function(shootPower,ballDirection,type) {
+	// socket.on('OPPONENT_SHOOT', function(shootPower,ballDirection,type) {
+	socket.on('OPPONENT_SHOOT', function(currentUserAtr) {
 	
-	    var currentUserAtr = shootPower+':'+ballDirection+':'+type;
+	    // var currentUserAtr = shootPower+':'+ballDirection+':'+type;
 		
 		if(window.unityInstance!=null)
 		{
-	     // sends the package currentUserAtr to the method OnOpponentShoot in the NetworkManager class on Unity
-		  window.unityInstance.SendMessage ('NetworkManager', 'OnOpponentShoot', currentUserAtr);
-		
+		  window.unityInstance.SendMessage ('NetworkManager', 'OnOpponentShoot', currentUserAtr);		
 		}
 		
 	});//END_SOCKET.ON
-	socket.on('OPPONENT_MOVE_BALL', function(ballDirection) {
+	socket.on('OPPONENT_MOVE_BALL', function(currentUserAtr) {
 	
-	    var currentUserAtr = ballDirection;
+	    // var currentUserAtr = ballDirection;
 		
 		if(window.unityInstance!=null)
 		{
