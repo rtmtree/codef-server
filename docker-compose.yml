@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  codef-server:
+    build:
+      context: io-server/
+    container_name: codef-server
+    ports:
+      - 3000:3000
+    env_file:
+      - environment/.codef-server.env
+    networks:
+      - socket-network
+  codef-client:
+    build:
+      context: io-client/
+    container_name: codef-client
+    ports:
+      - 8080:8080
+    env_file:
+      - environment/.codef-client.env
+    networks:
+      - socket-network
+  # redis-main:
+  #   image: redis
+  #   container_name: redis-main
+  #   ports:
+  #     - 6380:6379
+  #   networks:
+  #     - redisNet
+
+networks:
+  socket-network: 
+    driver: bridge
