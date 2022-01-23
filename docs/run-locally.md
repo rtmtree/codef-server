@@ -3,7 +3,7 @@
 1.export environment
 
 ```zsh
-source ./scripts/set_env_vars.sh environment/.codef-client.env
+source ./scripts/set-env-vars.sh environment/.codef-client.env
 ```
 
 2. run application
@@ -18,7 +18,7 @@ yarn start
 1.export environment
 
 ```zsh
-source ./scripts/set_env_vars.sh environment/.codef-server.env
+source ./scripts/set-env-vars.sh environment/.codef-server.env
 ```
 
 2. run application

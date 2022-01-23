@@ -1,3 +1,4 @@
-dist/*
+io-client/dist/*
+io-server/dist/*
 node_module*/
 .vscode/
