@@ -45,9 +45,9 @@ window.addEventListener('load', function() {
 	  
 	});//END_SOCKET.ON
 
-	socket.on('MATCH_CREATED', function(id,name,isHome) {
+	socket.on('MATCH_CREATED', function(currentUserAtr) {
 				      		
-		var currentUserAtr = id+':'+name+':'+isHome;
+		// var currentUserAtr = id+':'+name+':'+isHome;
 		
 		 if(window.unityInstance!=null)
 		  {
@@ -77,7 +77,7 @@ window.addEventListener('load', function() {
 	socket.on('RENDER_FROM_HOST', function(currentUserAtr) {
 		if(window.unityInstance!=null)
 		{
-		  window.unityInstance.SendMessage ('NetworkManager', 'RendeFromHost', currentUserAtr);		
+		  window.unityInstance.SendMessage ('NetworkManager', 'RenderFromHost', currentUserAtr);		
 		}
 		
 	});//END_SOCKET.ON
