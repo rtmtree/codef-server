@@ -1,4 +1,4 @@
-var socket = io("http://localhost:3000") || {};
+var socket = io() || {};
 socket.isReady = false;
 
 window.addEventListener('load', function() {
@@ -69,6 +69,23 @@ window.addEventListener('load', function() {
 		//   window.unityInstance.SendMessage ('NetworkManager', 'OnSpawnPlayer', currentUserAtr);
 		
 		// }
+		
+	});//END_SOCKET.ON
+
+
+	
+	socket.on('RENDER_FROM_HOST', function(currentUserAtr) {
+		if(window.unityInstance!=null)
+		{
+		  window.unityInstance.SendMessage ('NetworkManager', 'RendeFromHost', currentUserAtr);		
+		}
+		
+	});//END_SOCKET.ON
+	socket.on('MOVE_GK_FROM_CLIENT', function(currentUserAtr) {
+		if(window.unityInstance!=null)
+		{
+		  window.unityInstance.SendMessage ('NetworkManager', 'MoveGKFromClient', currentUserAtr);		
+		}
 		
 	});//END_SOCKET.ON
 

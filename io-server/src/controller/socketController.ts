@@ -68,15 +68,18 @@ export const onSocketEvent = (socket: Socket) => {
     })
   })
 
-  socket.on('MOVE_AND_ROTATE', function (_data) {
+  socket.on('HOST_TO_RENDER', function (_data) {
     const data = JSON.parse(_data)
 
     if (user) {
-      user.position = data.position
+      socket.to(user.curOpponent).emit('RENDER_FROM_HOST', _data)
+    }
+  })
 
-      user.rotation = data.rotation
-
-      socket.broadcast.emit('UPDATE_MOVE_AND_ROTATE', user.socketId, user.position, user.rotation)
+  socket.on('CLIENT_MOVE_GK', function (_data) {
+    const data = JSON.parse(_data)
+    if (user) {
+      socket.to(user.curOpponent).emit('MOVE_GK_FROM_CLIENT', _data)
     }
   })
 
