@@ -11,11 +11,11 @@ Tech Stacks
 
 ---
 
-### [Run project locally] (docs/run-locally.md)
+### [Run project locally](docs/run-locally.md)
 
-### [Run project prod] (docs/run-prod.md)
+### [Run project prod](docs/run-prod.md)
 
-### [Update public] (docs/update-public.md)
+### [Update public](docs/update-public.md)
 
 ---
 
