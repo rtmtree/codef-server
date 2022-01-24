@@ -7,8 +7,11 @@ Tech Stacks
 - Express: web application framework https://expressjs.com
 - TypeScript: typed build on JavaScript https://www.typescriptlang.org/
 
-Noted
+### Setup dev environment
 
+Pre-commit Hook with Husky
+
+-
 - **when commit, pre-commit hook will check code format and run all tests**
 - **If code format is wrong or test not pass, commit will failed**
 
