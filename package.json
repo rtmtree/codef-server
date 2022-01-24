@@ -1,0 +1,11 @@
+{
+  "name": "codef-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github:rtmtree/codef-server.git",
+  "author": "tharit.rattananenya <tharit.rt@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^7.0.4"
+  }
+}

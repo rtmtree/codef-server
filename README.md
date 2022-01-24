@@ -6,62 +6,78 @@ Tech Stacks
 - NodeJS: javascript server environment https://nodejs.org
 - Express: web application framework https://expressjs.com
 - TypeScript: typed build on JavaScript https://www.typescriptlang.org/
+- Husky: pre-commit hook https://typicode.github.io/husky/#/
+- Docker: containerized service https://docs.docker.com/
+
+---
+
+### [Run project locally] (docs/run-locally.md)
+
+### [Run project prod] (docs/run-prod.md)
+
+### [Update public] (docs/update-public.md)
+
+---
 
 ### Setup dev environment
 
-Pre-commit Hook with Husky
+1. Enable pre-commit hook with husky
 
--
+```zsh
+yarn && yarn husky install
+```
+
 - **when commit, pre-commit hook will check code format and run all tests**
 - **If code format is wrong or test not pass, commit will failed**
 
 ---
 
-## Run project locally
-
-1. install dependencies
-
-```zsh
-yarn
-```
-
-2. run project locally
-
-```zsh
-yarn start
-```
-
-3. open http://localhost:3000 to access the game
-4. open http://localhost:3000/api/health to check health of the server
-
----
-
-## Run test
+### Run test
 
 1. run all test
 
 ```zsh
-yarn test
+sh ./scripts/test-local.sh
 ```
 
 2. run specific test
 
 ```zsh
-yarn test <path-to-test-file>
+cd ./<io-client or io-server>
+```
+
+- to run all test in dir
+
+```zsh
+yarn test
+```
+
+- to run all test in specific file
+
+```zsh
+yarn test <relative-path-to-file>
+```
+
+- to run test and persist test console
+
+```zsh
+yarn test --watchAll
 ```
 
 ---
 
-## Format code
+### Format code
 
 1. format code with prettier
 
 ```zsh
+cd ./<io-client or io-server>
 yarn format
 ```
 
 2. check format code
 
 ```zsh
+cd ./<io-client or io-server>
 yarn lint
 ```

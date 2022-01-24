@@ -10,7 +10,8 @@ source ./scripts/set-env-vars.sh environment/.codef-client.env
 
 ```zsh
 cd io-client
-yarn start
+yarn
+yarn start:dev
 ```
 
 ### Run server
@@ -25,5 +26,6 @@ source ./scripts/set-env-vars.sh environment/.codef-server.env
 
 ```zsh
 cd io-server
-yarn start
+yarn
+yarn start:dev
 ```
