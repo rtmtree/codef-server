@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.corsOptions = void 0;
 const rawConfig_1 = require("../rawConfig");
-const additionalSafeHosts = "ADDITIONAL_CORS_HOSTS" in process.env
-    ? rawConfig_1.ADDITIONAL_CORS_HOSTS.split(",")
-    : [];
+const additionalSafeHosts = 'ADDITIONAL_CORS_HOSTS' in process.env ? rawConfig_1.ADDITIONAL_CORS_HOSTS.split(',') : [];
 const CORSSafeList = additionalSafeHosts;
 exports.corsOptions = {
     origin: (origin, callback) => {
@@ -12,7 +10,7 @@ exports.corsOptions = {
             callback(null, true);
         }
         else {
-            callback(new Error("Not allowed by CORS"));
+            callback(new Error('Not allowed by CORS'));
         }
     },
 };

@@ -17,6 +17,7 @@ const onSocketEvent = (socket) => {
     });
     socket.on('LOGIN', function (_data) {
         (0, logger_1.logInfo)('[INFO] JOIN received !!! ');
+        (0, logger_1.logInfo)(_data);
         const data = JSON.parse(_data);
         user = {
             name: data.name,
@@ -41,34 +42,45 @@ const onSocketEvent = (socket) => {
             if (store_1.clientLookup[i].socketId != user.socketId) {
                 if (store_1.clientLookup[i].status == 1) {
                     (0, logger_1.logInfo)(user.socketId + ' MATCH_CREATED ' + store_1.clientLookup[i].socketId);
-                    socket.emit('MATCH_CREATED', user.name, store_1.clientLookup[i].name, true);
-                    socket.to(store_1.clientLookup[i].socketId).emit('MATCH_CREATED', user.name, store_1.clientLookup[i].name, false);
+                    socket.emit('MATCH_CREATED', JSON.stringify({
+                        name: user.name,
+                        opName: store_1.clientLookup[i].name,
+                        isHome: true
+                    }));
+                    socket.to(store_1.clientLookup[i].socketId).emit('MATCH_CREATED', JSON.stringify({
+                        name: user.name,
+                        opName: store_1.clientLookup[i].name,
+                        isHome: false
+                    }));
                     store_1.clientLookup[i].curOpponent = store_1.clientLookup[user.socketId].socketId;
                     store_1.clientLookup[user.socketId].curOpponent = store_1.clientLookup[i].socketId;
                 }
             }
         });
     });
-    socket.on('MOVE_AND_ROTATE', function (_data) {
+    socket.on('HOST_TO_RENDER', function (_data) {
         const data = JSON.parse(_data);
         if (user) {
-            user.position = data.position;
-            user.rotation = data.rotation;
-            socket.broadcast.emit('UPDATE_MOVE_AND_ROTATE', user.socketId, user.position, user.rotation);
+            socket.to(user.curOpponent).emit('RENDER_FROM_HOST', _data);
+        }
+    });
+    socket.on('CLIENT_MOVE_GK', function (_data) {
+        const data = JSON.parse(_data);
+        if (user) {
+            socket.to(user.curOpponent).emit('MOVE_GK_FROM_CLIENT', _data);
         }
     });
     socket.on('SHOOT', function (_data) {
-        const data = JSON.parse(_data);
         (0, logger_1.logInfo)('SHOOT');
         if (user) {
-            socket.to(user.curOpponent).emit('OPPONENT_SHOOT', data.shootPower, data.ballDirection, data.type);
+            socket.to(user.curOpponent).emit('OPPONENT_SHOOT', _data);
         }
     });
     socket.on('MOVE_BALL', function (_data) {
         const data = JSON.parse(_data);
         (0, logger_1.logInfo)('MOVE_BALL');
         if (user) {
-            socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', data.ballDirection);
+            socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', _data);
         }
     });
     socket.on('ANIMATION', function (_data) {

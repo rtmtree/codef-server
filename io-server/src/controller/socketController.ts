@@ -21,7 +21,7 @@ export const onSocketEvent = (socket: Socket) => {
 
   socket.on('LOGIN', function (_data) {
     logInfo('[INFO] JOIN received !!! ')
-
+    logInfo(_data);
     const data = JSON.parse(_data)
     user = {
       name: data.name,
@@ -59,8 +59,18 @@ export const onSocketEvent = (socket: Socket) => {
       if (clientLookup[i].socketId != user.socketId) {
         if (clientLookup[i].status == 1) {
           logInfo(user.socketId + ' MATCH_CREATED ' + clientLookup[i].socketId)
-          socket.emit('MATCH_CREATED', user.name, clientLookup[i].name, true)
-          socket.to(clientLookup[i].socketId).emit('MATCH_CREATED', user.name, clientLookup[i].name, false)
+          socket.emit('MATCH_CREATED', 
+          JSON.stringify({
+            name: user.name,
+            opName: clientLookup[i].name,
+            isHome: true
+          }))
+          socket.to(clientLookup[i].socketId).emit('MATCH_CREATED', 
+          JSON.stringify({
+            name: user.name,
+            opName: clientLookup[i].name,
+            isHome: false
+          }))
           clientLookup[i].curOpponent = clientLookup[user.socketId].socketId
           clientLookup[user.socketId].curOpponent = clientLookup[i].socketId
         }
@@ -69,7 +79,7 @@ export const onSocketEvent = (socket: Socket) => {
   })
 
   socket.on('HOST_TO_RENDER', function (_data) {
-    const data = JSON.parse(_data)
+    logInfo(_data)
 
     if (user) {
       socket.to(user.curOpponent).emit('RENDER_FROM_HOST', _data)
@@ -77,25 +87,25 @@ export const onSocketEvent = (socket: Socket) => {
   })
 
   socket.on('CLIENT_MOVE_GK', function (_data) {
-    const data = JSON.parse(_data)
+    logInfo(_data)
     if (user) {
       socket.to(user.curOpponent).emit('MOVE_GK_FROM_CLIENT', _data)
     }
   })
 
   socket.on('SHOOT', function (_data) {
-    const data = JSON.parse(_data)
     logInfo('SHOOT')
     if (user) {
-      socket.to(user.curOpponent).emit('OPPONENT_SHOOT', data.shootPower, data.ballDirection, data.type)
+      socket.to(user.curOpponent).emit('OPPONENT_SHOOT', _data)
     }
   })
 
   socket.on('MOVE_BALL', function (_data) {
-    const data = JSON.parse(_data)
-    logInfo('MOVE_BALL')
+    logInfo('MOVE_BALL2')
+    logInfo(JSON.stringify(_data))
+    logInfo(JSON.stringify({aa:12}))
     if (user) {
-      socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', data.ballDirection)
+      socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', _data)
     }
   })
 

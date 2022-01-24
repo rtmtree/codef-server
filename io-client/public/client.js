@@ -1,4 +1,4 @@
-var socket = io('http://localhost:3000') || {};
+var socket = io('http://localhost:3000') || {}
 socket.isReady = false;
 
 window.addEventListener('load', function() {
@@ -101,7 +101,7 @@ window.addEventListener('load', function() {
 		
 	});//END_SOCKET.ON
 	socket.on('OPPONENT_MOVE_BALL', function(currentUserAtr) {
-	
+		console.log(currentUserAtr)
 	    // var currentUserAtr = ballDirection;
 		
 		if(window.unityInstance!=null)

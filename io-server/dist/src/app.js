@@ -13,12 +13,12 @@ const port = rawConfig_1.SERVICE_PORT;
 const httpServer = http_1.default.createServer(server_1.default);
 const io = new socket_io_1.Server(httpServer, {
     cors: {
-        origin: "*",
+        origin: '*',
     },
 });
 const start = () => {
     try {
-        io.on("connection", socketController_1.onSocketEvent);
+        io.on('connection', socketController_1.onSocketEvent);
         httpServer.listen(port, () => {
             (0, logger_1.logInfo)(`Starting server on ${port}...`);
         });
