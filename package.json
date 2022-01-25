@@ -5,6 +5,9 @@
   "repository": "git@github:rtmtree/codef-server.git",
   "author": "tharit.rattananenya <tharit.rt@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "sh ./scripts/test-local.sh"
+  },
   "devDependencies": {
     "husky": "^7.0.4"
   }

@@ -9,7 +9,7 @@ open -a Docker
 2. spin everything up
 
 ```zsh
-docker-compose up
+docker-compose up -f docker-compose.yml -f docker-compose-prod.yml
 ```
 
 3. Terminate everything

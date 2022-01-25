@@ -11,7 +11,7 @@
     "lint": "prettier --check . && eslint .",
     "build": "tsc",
     "start:prod": "node ./dist/src/app.js",
-    "start:dev": "tsc && node ./dist/src/app.js",
+    "start:dev": "nodemon --watch './**/*.ts' --exec 'ts-node' ./src/app.ts",
     "test": "jest"
   },
   "keywords": [],
@@ -26,10 +26,12 @@
     "@typescript-eslint/parser": "^5.9.0",
     "eslint": "^8.6.0",
     "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
     "prettier": "2.5.1",
     "socket.io-client": "^4.4.1",
     "supertest": "^6.1.6",
     "ts-jest": "^27.1.2",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
   "dependencies": {

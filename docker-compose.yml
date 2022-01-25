@@ -4,6 +4,7 @@ services:
   codef-server:
     build:
       context: io-server/
+      dockerfile: Dockerfile
     container_name: codef-server
     ports:
       - 3000:3000
@@ -14,6 +15,7 @@ services:
   codef-client:
     build:
       context: io-client/
+      dockerfile: Dockerfile-prod
     container_name: codef-client
     ports:
       - 8080:8080

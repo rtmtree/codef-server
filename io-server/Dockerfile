@@ -1,22 +1,17 @@
 FROM node:16-alpine
+
+EXPOSE 8080
+RUN mkdir -p /app
 WORKDIR /app
 
 ##ignore if don't have react with typescript
-COPY tsconfig.json .
+COPY tsconfig.json /app/tsconfig.json 
 
-COPY package.json .
-COPY yarn.lock .
-COPY src ./src
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
 
+## install only the packages defined in the package-lock.json (faster than the normal npm install)
 RUN yarn
-RUN yarn build
 
-FROM node:16-alpine
-WORKDIR /app
-COPY package.json ./
-COPY yarn.lock .
-RUN yarn --prod
-COPY --from=0 /app/dist .
-RUN yarn global add pm2
-
-CMD ["pm2-runtime", "app.js"]
+# Run 'npm run dev' when the container starts.
+CMD ["yarn", "start:dev"]

@@ -1,3 +1,9 @@
+### Use Docker
+
+```zsh
+docker-compose up
+```
+
 ### Run client
 
 1.export environment

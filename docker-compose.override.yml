@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  codef-server:
+    build:
+      context: io-server/
+      dockerfile: Dockerfile
+    volumes:
+        - /app/node_modules
+        - ./io-server:/app
+  codef-client:
+    build:
+      context: io-client/
+      dockerfile: Dockerfile
+    container_name: codef-client
+  # redis-main:
+  #   image: redis
+  #   container_name: redis-main
+  #   ports:
+  #     - 6380:6379
+  #   networks:
+  #     - redisNet
