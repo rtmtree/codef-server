@@ -2,3 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 sh ./scripts/test-local.sh
+echo "Congratulation! your code look good"
