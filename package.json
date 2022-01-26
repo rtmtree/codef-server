@@ -9,6 +9,7 @@
     "test": "sh ./scripts/test-local.sh"
   },
   "devDependencies": {
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "nodemon": "^2.0.15"
   }
 }
