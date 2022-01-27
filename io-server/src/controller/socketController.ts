@@ -105,9 +105,7 @@ export const onSocketEvent = (socket: Socket) => {
   })
 
   socket.on('MOVE_BALL', function (_data) {
-    logInfo('MOVE_BALL2')
-    logInfo(JSON.stringify(_data))
-    logInfo(JSON.stringify({ aa: 12 }))
+    logInfo('MOVE_BALL')
     if (user) {
       socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', _data)
     }
