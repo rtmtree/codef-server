@@ -6,8 +6,8 @@ services:
       context: io-server/
       dockerfile: Dockerfile
     volumes:
-        - /app/node_modules
-        - ./io-server:/app
+      - /app/node_modules
+      - ./io-server:/app
   codef-client:
     build:
       context: io-client/

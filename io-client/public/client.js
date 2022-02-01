@@ -72,7 +72,13 @@ window.addEventListener('load', function() {
 		
 	});//END_SOCKET.ON
 
-
+		
+    socket.on('INIT_ROOM', function(currentUserAtr) {
+		if(window.unityInstance!=null)
+		{
+		 window.unityInstance.SendMessage ('ServerManager', 'InitRoom',currentUserAtr);
+		}
+	});//END_SOCKET.ON	
 	
 	socket.on('RENDER_FROM_HOST', function(currentUserAtr) {
 		if(window.unityInstance!=null)
@@ -171,20 +177,6 @@ window.addEventListener('load', function() {
 		
 	});//END_SOCKET.ON
 	
-    socket.on('UPDATE_PHISICS_DAMAGE', function(targetId,targetHealth) {
-	
-	     var currentUserAtr = targetId+':'+targetHealth;
-		 
-		if(window.unityInstance!=null)
-		{
-		 
-		 window.unityInstance.SendMessage ('NetworkManager', 'OnUpdatePlayerPhisicsDamage',currentUserAtr);
-		
-		
-		}
-		
-		
-	});//END_SOCKET.ON		
 	
 	
 		        

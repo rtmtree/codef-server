@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io'
 import { logInfo } from '../middleware/logger'
-import { clientLookup, clients } from '../socket/store'
+import { clientLookup, clients, serverUnity } from '../socket/store'
 import { User } from '../socket/type'
 
 export const onSocketEvent = (socket: Socket) => {
@@ -10,6 +10,11 @@ export const onSocketEvent = (socket: Socket) => {
     socketId: undefined,
     status: 0,
   }
+
+  socket.on('UPDATE_UNITY_SERVER_LOCATION', function (_data) {
+    logInfo('UPDATE_UNITY_SERVER_LOCATION' + ' ' + socket.id)
+    serverUnity['socketId'] = socket.id
+  })
 
   socket.on('PING', function (_pack) {
     const pack = JSON.parse(_pack)
@@ -75,6 +80,9 @@ export const onSocketEvent = (socket: Socket) => {
               isHome: false,
             }),
           )
+          if (serverUnity['socketId']) {
+            socket.to(serverUnity['socketId']).emit('INIT_ROOM', JSON.stringify({}))
+          }
           clientLookup[i].curOpponent = clientLookup[user.socketId].socketId
           clientLookup[user.socketId].curOpponent = clientLookup[i].socketId
         }
