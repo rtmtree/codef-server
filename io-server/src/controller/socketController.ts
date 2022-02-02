@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io'
 import { logInfo } from '../middleware/logger'
-import { clientLookup, clients, serverUnity } from '../socket/store'
+import { clientLookup, clients, serverUnity, matchLookup } from '../socket/store'
 import { User } from '../socket/type'
 
 export const onSocketEvent = (socket: Socket) => {
@@ -63,25 +63,17 @@ export const onSocketEvent = (socket: Socket) => {
     Object.keys(clientLookup).forEach(function (i) {
       if (clientLookup[i].socketId != user.socketId) {
         if (clientLookup[i].status == 1) {
-          logInfo(user.socketId + ' MATCH_CREATED ' + clientLookup[i].socketId)
-          socket.emit(
-            'MATCH_CREATED',
-            JSON.stringify({
-              name: user.name,
-              opName: clientLookup[i].name,
-              isHome: true,
-            }),
-          )
-          socket.to(clientLookup[i].socketId).emit(
-            'MATCH_CREATED',
-            JSON.stringify({
-              name: user.name,
-              opName: clientLookup[i].name,
-              isHome: false,
-            }),
-          )
           if (serverUnity['socketId']) {
-            socket.to(serverUnity['socketId']).emit('INIT_ROOM', JSON.stringify({}))
+            const matchObj = {
+              matchId: user.socketId + '' + clientLookup[i].socketId,
+              Hname: user.name,
+              HsocketId: user.socketId,
+              Aname: clientLookup[i].name,
+              AsocketId: clientLookup[i].socketId,
+              roomIndex: null,
+            }
+            matchLookup[matchObj.matchId] = matchObj
+            socket.to(serverUnity['socketId']).emit('INIT_ROOM', JSON.stringify(matchObj))
           }
           clientLookup[i].curOpponent = clientLookup[user.socketId].socketId
           clientLookup[user.socketId].curOpponent = clientLookup[i].socketId
@@ -90,9 +82,34 @@ export const onSocketEvent = (socket: Socket) => {
     })
   })
 
+  socket.on('CONFIRM_INIT_ROOM', function (_data) {
+    logInfo(_data)
+    const data = JSON.parse(_data)
+    logInfo(' MATCH_CREATED ' + data.matchId)
+    socket.to(matchLookup[data.matchId].HsocketId).emit(
+      'MATCH_CREATED_TO_CLIENT',
+      JSON.stringify({
+        name: matchLookup[data.matchId].Hname,
+        opName: matchLookup[data.matchId].Aname,
+        isHome: true,
+        matchId: matchLookup[data.matchId].matchId,
+      }),
+    )
+    socket.to(matchLookup[data.matchId].AsocketId).emit(
+      'MATCH_CREATED_TO_CLIENT',
+      JSON.stringify({
+        name: matchLookup[data.matchId].Aname,
+        opName: matchLookup[data.matchId].Hname,
+        isHome: false,
+        matchId: matchLookup[data.matchId].matchId,
+      }),
+    )
+    matchLookup[data.matchId].roomIndex = data.roomIndex
+    logInfo(data)
+  })
+
   socket.on('HOST_TO_RENDER', function (_data) {
     logInfo(_data)
-
     if (user) {
       socket.to(user.curOpponent).emit('RENDER_FROM_HOST', _data)
     }
@@ -107,16 +124,23 @@ export const onSocketEvent = (socket: Socket) => {
 
   socket.on('SHOOT', function (_data) {
     logInfo('SHOOT')
-    if (user) {
-      socket.to(user.curOpponent).emit('OPPONENT_SHOOT', _data)
-    }
+    // if (user) {
+    //   socket.to(user.curOpponent).emit('OPPONENT_SHOOT', _data)
+    // }
   })
 
   socket.on('MOVE_BALL', function (_data) {
     logInfo('MOVE_BALL')
-    if (user) {
-      socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', _data)
+    logInfo(_data)
+    const data = JSON.parse(_data)
+    data['roomIndex'] = matchLookup[data.matchId].roomIndex
+
+    if (serverUnity['socketId']) {
+      socket.to(serverUnity['socketId']).emit('CLIENT_MOVE_BALL_TO_SERVER', JSON.stringify(data))
     }
+    // if (user) {
+    //   socket.to(user.curOpponent).emit('OPPONENT_MOVE_BALL', _data)
+    // }
   })
 
   socket.on('ANIMATION', function (_data) {

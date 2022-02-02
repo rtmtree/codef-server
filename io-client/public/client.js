@@ -45,10 +45,7 @@ window.addEventListener('load', function() {
 	  
 	});//END_SOCKET.ON
 
-	socket.on('MATCH_CREATED', function(currentUserAtr) {
-				      		
-		// var currentUserAtr = id+':'+name+':'+isHome;
-		
+	socket.on('MATCH_CREATED_TO_CLIENT', function(currentUserAtr) {
 		 if(window.unityInstance!=null)
 		  {
 		   
@@ -107,13 +104,21 @@ window.addEventListener('load', function() {
 		
 	});//END_SOCKET.ON
 	socket.on('OPPONENT_MOVE_BALL', function(currentUserAtr) {
-	
-	    // var currentUserAtr = ballDirection;
 		
 		if(window.unityInstance!=null)
 		{
 	     // sends the package currentUserAtr to the method OnOpponentShoot in the NetworkManager class on Unity
 		  window.unityInstance.SendMessage ('NetworkManager', 'OnOpponentMoveBall', currentUserAtr);
+		
+		}
+		
+	});//END_SOCKET.ON
+	socket.on('CLIENT_MOVE_BALL_TO_SERVER', function(currentUserAtr) {
+	
+		if(window.unityInstance!=null)
+		{
+	     // sends the package currentUserAtr to the method OnOpponentShoot in the NetworkManager class on Unity
+		  window.unityInstance.SendMessage ('ServerManager', 'OnClientMoveBall', currentUserAtr);
 		
 		}
 		
